@@ -1,14 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-import navBar from './navBar';
-
+import React from 'react';
+import { BrowserRouter, Route, Switch, Routes } from 'react-router-dom';
+import Navbar from './Navbar';
+// import DietPlansPage from './DietPlansPage';
+import UserForm from './UserForm';
 function App() {
   return (
-    <div className="App">
-      <navBar/>
-    </div>
+    <BrowserRouter>
+      <Navbar/>
+      <Routes>
+        <Route path="/user-form" element={<UserForm/>} />
+        {/* <Route path="/DietPlans"/> */}
+            </Routes>
+    </BrowserRouter>
   );
+
 }
 
 export default App;
-cDsdsads
