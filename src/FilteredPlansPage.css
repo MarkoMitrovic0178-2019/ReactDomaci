@@ -1,0 +1,47 @@
+.card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .card h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .card p {
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  
+  .card ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .card li {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+  
+  .card button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .card button:hover {
+    background-color: #0056b3;
+  }
+  
