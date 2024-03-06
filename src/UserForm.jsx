@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import './UserForm.css';
-
-function UserForm() {
+import dietPlans from './DietPlans';
+import { useNavigate } from 'react-router-dom'; 
+function UserForm(props) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     age: '',
     height: '',
     weight: '',
     activityLevel: '',
-    goal: 'slim down',
+    goal: '',
     medicalConditions: ''
   });
 
@@ -33,11 +35,13 @@ function UserForm() {
 
     // Find the appropriate diet plan based on user's goal
     const userGoal = formData.goal;
-    const filteredPlans = dietPlans.find(group => group.plans.some(plan => plan.userGroup === dietPlan && plan.type.toLowerCase().includes(userGoal.toLowerCase())));
+    const filteredPlans = dietPlans.find(plan => plan.userGroup === dietPlan && plan.type.toLowerCase().includes(userGoal.toLowerCase()));
+
 
     if (filteredPlans) {
       // Navigate to diet plan page passing the filtered plan as state
-      history.push('/diet-plan', { plan: filteredPlans });
+      navigate('/filtered-plans', { state: { filteredPlans: filteredPlans } });
+
     } else {
       console.log('No matching diet plan found for the user sdasafsfas');
     }
