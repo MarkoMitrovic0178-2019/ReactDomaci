@@ -1,6 +1,15 @@
 .navbar {
-    background-color: #333; /* Dark background color */
+    position: fixed; /* Ensure the navbar stays fixed at the top */
+    top: 0; /* Position the navbar at the top of the page */
+    left: 0;
+    width: 100%;
+    background-color: rgb(46, 46, 46); /* Dark background color */
     padding: 10px 20px; /* Add some padding */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000; /* Ensure the navbar stays above other content */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
   }
   
   .navbar-nav {

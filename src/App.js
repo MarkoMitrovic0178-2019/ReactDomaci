@@ -4,13 +4,14 @@ import Navbar from './Navbar';
 // import DietPlansPage from './DietPlansPage';
 import UserForm from './UserForm';
 import FilteredPlansPage from './FilteredPlans';
+import HomePage from './HomePage';
 function App() {
   return (
     <BrowserRouter>
       <Navbar/>
       <Routes>
         <Route path="/user-form" element={<UserForm/>} />
-        {/* <Route path="/DietPlans"/> */}
+        <Route path="/" element={<HomePage/>} />
         <Route  path="/filtered-plans" element={<FilteredPlansPage/>}/>
             </Routes>
     </BrowserRouter>
