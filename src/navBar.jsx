@@ -10,7 +10,7 @@ function Navbar() {
           <a href="/" className="nav-link">Home</a>
         </li>
         <li className="nav-item">
-          <a href="/diet-plans" className="nav-link">Diet Plans</a>
+          <a href="/log-in" className="nav-link">Log in</a>
         </li>
         <li className="nav-item">
           <a href="/user-form" className="nav-link">Get Your Diet Plan</a>
