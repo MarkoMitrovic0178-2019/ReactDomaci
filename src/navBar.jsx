@@ -15,6 +15,9 @@ function Navbar() {
         <li className="nav-item">
           <a href="/user-form" className="nav-link">Get Your Diet Plan</a>
         </li>
+        <li className="nav-item">
+          <a href="/profile" className="nav-link">Profile</a>
+        </li>
       </ul>
     </nav>
   );

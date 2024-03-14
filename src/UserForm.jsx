@@ -33,17 +33,17 @@ function UserForm(props) {
       dietPlan = 'Elderly Users (Over 60)';
     }
 
-    // Find the appropriate diet plan based on user's goal
+   
     const userGoal = formData.goal;
     const filteredPlans = dietPlans.find(plan => plan.userGroup === dietPlan && plan.type.toLowerCase().includes(userGoal.toLowerCase()));
 
 
     if (filteredPlans) {
-      // Navigate to diet plan page passing the filtered plan as state
+      
       navigate('/filtered-plans', { state: { filteredPlans: filteredPlans } });
 
     } else {
-      console.log('No matching diet plan found for the user sdasafsfas');
+      console.log('No matching diet plan found for the user');
     }
    
   };
