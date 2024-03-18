@@ -1,7 +1,7 @@
 import './LoginPage.css'
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; 
-import { v4 as uuidv4 } from 'uuid'; 
+
 
 const LoginPage = () => {
     const navigate= useNavigate();
@@ -23,16 +23,9 @@ const LoginPage = () => {
         const storedUserData = JSON.parse(localStorage.getItem('userData'));
         
         if (storedUserData && storedUserData.email === formData.email && storedUserData.password === formData.password) {
-            
-            const uniqueId = uuidv4();
-
-            
-            const userDataWithId = { ...storedUserData, id: uniqueId };
-
-            localStorage.setItem('currentUser', JSON.stringify(userDataWithId));
-                console.log(userDataWithId.id); 
+            localStorage.setItem('currentUser', JSON.stringify(storedUserData));
             alert('Login successful!');
-            navigate('/profile'); 
+            navigate('/profile');
         } else {
             alert('Invalid email or password. Please try again.');
         }

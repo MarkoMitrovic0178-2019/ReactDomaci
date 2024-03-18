@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import './LoginPage.css';
 import { useNavigate } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid'; 
 const RegisterPage = () => {
     const navigate=useNavigate();
     const [formData, setFormData] = useState({
         email: '',
-        password: ''
-    });
+        password: '',
+        id:0
+        });
 
     const handleChange = (e) => {
         setFormData({
@@ -17,7 +19,10 @@ const RegisterPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const uniqueId=uuidv4();
+        formData.id=uniqueId;
         localStorage.setItem('userData', JSON.stringify(formData));
+        
         alert('Registration successful!');
         navigate('/log-in')
 

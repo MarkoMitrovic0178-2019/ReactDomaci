@@ -38,7 +38,7 @@ function FilteredPlansPage() {
 
   return (
     <div>
-      <h2 style={{ textAlign: 'center' }}>Filtered Diet Plan</h2>
+      <h2 style={{ textAlign: 'center', color:'white' }}>Filtered Diet Plan</h2>
       <div className="card">
         <h3>{filteredPlan.type}</h3>
         <p>{filteredPlan.description}</p>

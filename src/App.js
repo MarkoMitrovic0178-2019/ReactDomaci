@@ -22,7 +22,7 @@ function App() {
         {currentUser ? (
           <Route path="/profile" element={<ProfilePage />} />
         ) : (
-          <Route path="/profile" element={<Navigate to="/login" />} />
+          <Route path="/profile" element={<Navigate to="/log-in" />} />
         )}
         <Route path="/filtered-plans" element={<FilteredPlansPage />} />
       </Routes>
