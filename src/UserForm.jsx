@@ -32,11 +32,10 @@ function UserForm(props) {
     } else {
       dietPlan = 'Elderly Users (Over 60)';
     }
-
    
     const userGoal = formData.goal;
-    const filteredPlans = dietPlans.find(plan => plan.userGroup === dietPlan && plan.type.toLowerCase().includes(userGoal.toLowerCase()));
-
+    const filteredPlans = dietPlans.find(plan => plan.userGroup === dietPlan &&
+       plan.type.toLowerCase().includes(userGoal.toLowerCase()));
 
     if (filteredPlans) {
       

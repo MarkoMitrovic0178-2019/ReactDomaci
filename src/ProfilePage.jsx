@@ -65,8 +65,7 @@ function ProfilePage() {
   };
   
   useEffect(() => {
-    console.log("Running useEffect");
-  
+    
     const savedPlan = JSON.parse(localStorage.getItem(`filteredPlan_${currentUser.id}`));
     console.log(savedPlan);
     if (JSON.stringify(savedPlan) !== JSON.stringify(filteredPlan)) {
@@ -81,19 +80,7 @@ function ProfilePage() {
    
   }, [currentUser,filteredPlan]); 
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
+
   const handleLogout = () => {
     localStorage.removeItem('currentUser');
     navigate('/log-in');
