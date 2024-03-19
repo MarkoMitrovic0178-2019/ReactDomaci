@@ -31,7 +31,7 @@ function FilteredPlansPage() {
       navigate('/profile'); 
     } else {
       alert('You must be logged in to save the plan.');
-      navigate('/login'); 
+      navigate('/log-in'); 
     }
   };
   

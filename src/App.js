@@ -7,9 +7,18 @@ import FilteredPlansPage from './FilteredPlans';
 import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 
 function App() {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  const [currentUser, setCurrentUser] = useState(null);
+
+  
+  useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem('currentUser'));
+    setCurrentUser(storedUserData);
+  }, []);
 
   return (
     <BrowserRouter>

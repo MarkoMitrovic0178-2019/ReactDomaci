@@ -60,7 +60,7 @@ function ProfilePage() {
       alert('Meal data saved successfully!');
     } else {
       alert('You must be logged in to save meal data.');
-      navigate('/login'); 
+      navigate('/log-in'); 
     }
   };
   

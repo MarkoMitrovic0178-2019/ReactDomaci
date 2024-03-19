@@ -21,9 +21,10 @@ const LoginPage = () => {
         e.preventDefault();
         
         const storedUserData = JSON.parse(localStorage.getItem('userData'));
-        
+        console.log(storedUserData);
         if (storedUserData && storedUserData.email === formData.email && storedUserData.password === formData.password) {
             localStorage.setItem('currentUser', JSON.stringify(storedUserData));
+            console.log(localStorage.getItem('currentUser'));
             alert('Login successful!');
             navigate('/profile');
         } else {
