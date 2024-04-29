@@ -1,54 +1,52 @@
-
 .user-form-container {
-    width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #f9f9f9;
-  }
-  
-  .user-form-container h2 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-  }
-  
-  .user-form-container form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .user-form-container label {
-    font-weight: bold;
-    margin-bottom: 8px;
-  }
-  
-  .user-form-container input,
-  .user-form-container select,
-  .user-form-container textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 16px;
-    margin-left: -10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-  }
-  
-  .user-form-container button {
-    width: 100%;
-    padding: 12px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .user-form-container button:hover {
-    background-color: #0056b3;
-  }
-  
+  width: 450px;
+  margin: 400px auto 0; /* Set margin-top to 100px */
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #f9f9f9;
+  align-items: center;
+}
+
+.user-form-container h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  color: black;
+}
+
+.user-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form-container label {
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.user-form-container input,
+.user-form-container select,
+.user-form-container textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.user-form-container button {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.user-form-container button:hover {
+  background-color: #0056b3;
+}
