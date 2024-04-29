@@ -2,12 +2,13 @@ import React, { useState , useEffect} from 'react';
 import './ProfilePage.css';
 import { Calendar } from 'react-calendar';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-function ProfilePage() {
+function ProfilePage({addMeals, meals, userId, addToken, token,addUserId}) {
   
   const navigate = useNavigate();
-  const currentUser = JSON.parse(localStorage.getItem('currentUser')); 
-  const [filteredPlan, setFilteredPlan] = useState(null);
+
+ 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [mealData, setMealData] = useState({
     breakfast: { meal: '', weight: '', calories: '' },
@@ -24,7 +25,7 @@ function ProfilePage() {
   };
 
   const loadSavedMeals = (date) => {
-    const savedMeals = JSON.parse(localStorage.getItem(`mealData_${currentUser.id}_${date.toDateString()}`));
+    const savedMeals = JSON.parse(localStorage.getItem(`mealData_${userId}_${date.toDateString()}`));
     if (savedMeals) {
       setMealData(savedMeals);
     } else {
@@ -39,7 +40,7 @@ function ProfilePage() {
     }
   };
 
-  // Function to handle meal data change
+
   const handleMealDataChange = (e, mealType) => {
     const { name, value } = e.target;
     setMealData(prevState => ({
@@ -55,61 +56,92 @@ function ProfilePage() {
   
 
   const handleSaveMeals = () => {
-    if (currentUser) {
-      localStorage.setItem(`mealData_${currentUser.id}_${selectedDate.toDateString()}`, JSON.stringify(mealData));
+    
+      localStorage.setItem(`mealData_${userId}_${selectedDate.toDateString()}`, JSON.stringify(mealData));
       alert('Meal data saved successfully!');
-    } else {
-      alert('You must be logged in to save meal data.');
-      navigate('/log-in'); 
-    }
+    
   };
+
+
+  const confirmDelete = () => {
+    if (window.confirm('Are you sure you want to delete?')) {
+      
+      axios.delete(`api/users/${userId}`, {
+        headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then((res)=>{
+        addToken(null);
+        addUserId(null);
+        alert("User deleted successfully");
+        navigate("/log-in");
+      }).catch((error)=>{
+        console.log(error);      
+      });      
+    } else {
+      alert('Delete canceled');
+    }
+  }
   
   useEffect(() => {
-    
-    const savedPlan = JSON.parse(localStorage.getItem(`filteredPlan_${currentUser.id}`));
-    console.log(savedPlan);
-    if (JSON.stringify(savedPlan) !== JSON.stringify(filteredPlan)) {
-      if (savedPlan==null){
-        setFilteredPlan(null);
-      }
-      else{
-        setFilteredPlan(savedPlan);
-      }
+
+    if(window.sessionStorage.getItem("diet_plan_id")!==0){
+        axios.get(`api/dietPlans/${window.sessionStorage.getItem("diet_plan_id")}/meals`)
+        .then((res) => {
+          addMeals(res.data.meals);
+          console.log(res.data.meals);
+        })
+        .catch(error => {
+          console.error('Error fetching meals:', error);
+        });
     }
+            
 
    
-  }, [currentUser,filteredPlan]); 
+  }, []); 
   
 
-  const handleLogout = () => {
-    localStorage.removeItem('currentUser');
-    navigate('/log-in');
-  };
+  
+  
   return (
-    <div className="profile-container">
-       
-      <div className="filtered-plan-section">
-        <h3 >Filtered Plan</h3>
-        
-        {filteredPlan? (
-        <>
-        <h3>{filteredPlan.type}</h3>
-        <p>{filteredPlan.description}</p>
-        <p>Calories: {filteredPlan.nutrition.calories}</p>
-        <p>Carbohydrates: {filteredPlan.nutrition.carbohydrates}</p>
-        <p>Proteins: {filteredPlan.nutrition.proteins}</p>
-        <p>Fats: {filteredPlan.nutrition.fats}</p>
-        <p>Fiber: {filteredPlan.nutrition.fiber}</p>
-       </>
-        ) : (
-       <p>No personalised plan added</p>
-       )}
-        
-      </div>
-      <div className="calendar-section">
-        <div className="logout-container">
-        <button onClick={handleLogout}>Logout</button>
-        </div>
+   
+   
+
+<div className="profile-container">
+    <div className="profile-content">
+        {window.sessionStorage.getItem("diet_plan_id") !==0 &&(
+            <div className="card">
+            <div className="card-body">
+            <button onClick={confirmDelete}>Delete profile</button>
+                        <h4>Meals</h4>
+                        <ul>
+                            {meals && ( meals.map((meal) => (
+                        <div  key={meal.id}>
+                        <h5 className="card-title">{meal.name}</h5>
+                      <p className="card-text">{meal.description}</p>
+                      <p className="card-text">Calories: {meal.calories}</p>
+                      <p className="card-text">Carbohydrates: {meal.carbohydrates}</p>
+                      <p className="card-text">Proteins: {meal.proteins}</p>
+                      <p className="card-text">Fats: {meal.fats}</p>
+                      <p className="card-text">Fiber: {meal.fiber}</p>
+                        </div>
+                        
+                          )))}
+                        
+                       </ul>
+                       
+                       </div>
+                       </div>
+                    )}
+                  
+                   
+                   
+              
+                  
+            
+            
+       {parseInt(window.sessionStorage.getItem("admin"))!==0 && (
+       <div className="calendar-section">
         <h3>Meal Calendar</h3>
         <Calendar onChange={handleDateChange} value={selectedDate} />
         <div className="meal-inputs">
@@ -143,10 +175,11 @@ function ProfilePage() {
 
           <button onClick={handleSaveMeals}>Save Meals</button>
         </div>
-        
+       
+      </div>)}             
+      
       </div>
-    
-    </div>
+</div>
   );
 }
 
