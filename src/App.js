@@ -8,32 +8,47 @@ import HomePage from './HomePage';
 import LoginPage from './LoginPage';
 import ProfilePage from './ProfilePage';
 import { useState } from 'react';
-import { useEffect } from 'react';
+import ForgotPaswordPage from './ForgotPassword';
+
 
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null);
+  // const [currentUser, setCurrentUser] = useState(null);
+  const[token,setToken]=useState();
+  const[meals,SetMeals]=useState([]);
+  const[userId,SetUserId]=useState();
+ 
 
-  
-  useEffect(() => {
-    const storedUserData = JSON.parse(localStorage.getItem('currentUser'));
-    setCurrentUser(storedUserData);
-  }, []);
+  function addUserId(user_id){
+    SetUserId(user_id);
+  }
+ function addToken(auth_token){
+    setToken(auth_token);
+  }
+  const addMeals = (meals) => {
+    SetMeals([...meals]);
+};
+
 
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar token={token} addToken={addToken} addUserId={addUserId}/>
       <Routes>
-        <Route path="/user-form" element={<UserForm />} />
-        <Route path="/log-in" element={<LoginPage />} />
+       
+        <Route path="/user-form" element={<UserForm userId={userId} token={token}/>} />
+      
+        <Route path="/log-in" element={<LoginPage addToken={addToken} addUserId={addUserId}/>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<HomePage />} />
-        {currentUser ? (
-          <Route path="/profile" element={<ProfilePage />} />
+        {token ? (
+          <Route path="/profile" element={<ProfilePage addMeals={addMeals} addUserId={addUserId} userId={userId} meals={meals} addToken={addToken} token={token}/>} />
         ) : (
           <Route path="/profile" element={<Navigate to="/log-in" />} />
         )}
-        <Route path="/filtered-plans" element={<FilteredPlansPage />} />
+
+          <Route path="/filtered-plans" element={<FilteredPlansPage addMeals={addMeals} addUserId={addUserId} userId={userId} token={token} meals={meals}/>} />
+       <Route path="/forgotPassword" element={<ForgotPaswordPage />} />
+        
       </Routes>
     </BrowserRouter>
   );
