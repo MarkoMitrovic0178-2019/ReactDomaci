@@ -1,59 +1,87 @@
 import React, { useState } from 'react';
 import './UserForm.css';
-import dietPlans from './DietPlans';
-import { useNavigate } from 'react-router-dom'; 
-function UserForm(props) {
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+function UserForm({token, userId}) {
+  
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     age: '',
+    gender: '',
     height: '',
     weight: '',
-    activityLevel: '',
-    goal: '',
+    activity_level: '',
+    goals: 'Weight Loss',
     medicalConditions: ''
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    // If the name is 'goals', directly update the formData
+    if (name === 'goals') {
+      setFormData(prevState => ({
+        ...prevState,
+        goals: value // Update goals field with the selected value
+      }));
+    } else {
+      // For other fields, update formData as usual
+      setFormData(prevState => ({
+        ...prevState,
+        [name]: value
+      }));
+    }
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let dietPlan = '';
-    const age = parseInt(formData.age);
-    if (age < 40) {
-      dietPlan = 'Young Users (Less than 40)';
-    } else if (age >= 40 && age <= 60) {
-      dietPlan = 'Middle-Aged Users (Between 40 and 60)';
-    } else {
-      dietPlan = 'Elderly Users (Over 60)';
+    console.log(formData);
+    console.log(token);
+    console.log(userId);
+    formData.height=parseFloat(formData.height);
+    formData.weight=parseFloat(formData.weight);
+    formData.activity_level=parseInt(formData.activity_level);
+    formData.age=parseInt(formData.age);
+    if(userId){
+      axios.put(`/api/users/${userId}`, formData ,
+      {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        }).then((response) => {
+          console.log(response.data);
+          const { goals, diet_plan_id } = response.data[1];
+          console.log(goals);
+          window.sessionStorage.setItem("goals", goals);
+          window.sessionStorage.setItem("diet_plan_id", diet_plan_id);
+          console.log(window.sessionStorage.getItem("goals")) ;
+          navigate('/filtered-plans');
+        });
     }
-   
-    const userGoal = formData.goal;
-    const filteredPlans = dietPlans.find(plan => plan.userGroup === dietPlan &&
-       plan.type.toLowerCase().includes(userGoal.toLowerCase()));
-
-    if (filteredPlans) {
-      
-      navigate('/filtered-plans', { state: { filteredPlans: filteredPlans } });
-
-    } else {
-      console.log('No matching diet plan found for the user');
+    else{
+      window.sessionStorage.setItem("goals", formData.goals);
+      navigate('/filtered-plans');
     }
-   
-  };
+    
+
+  }
+ 
+  
+  
 
   return (
-    <div>
-      <h2>Complete the form to get your personalised diet-plan!</h2>
-      <form className='user-form-container' onSubmit={handleSubmit}>
+    <div className='user-form-container'>
+      
+      <form  onSubmit={handleSubmit}>
+      <h2 >Complete the form to get your personalised diet-plan!</h2>
         <div>
           <label>Age:</label>
           <input type="number" name="age" value={formData.age} onChange={handleChange} />
+        </div>
+        <div>
+          <label>Gender:</label>
+          <input type="text" name="gender" value={formData.gender} onChange={handleChange} />
         </div>
         <div>
           <label>Height (cm):</label>
@@ -65,24 +93,24 @@ function UserForm(props) {
         </div>
         <div>
           <label>Activity Level (times per week):</label>
-          <input type="number" name="activityLevel" value={formData.activityLevel} onChange={handleChange} />
+          <input type="number" name="activity_level" value={formData.activity_level} onChange={handleChange} />
         </div>
         <div>
           <label>Goals:</label>
-          <select name="goal" value={formData.goal} onChange={handleChange}>
-            <option value="slim down">Slim Down</option>
-            <option value="get stronger">Get Stronger</option>
+          <select name="goals" value={formData.goals} onChange={handleChange}>
+            <option value="slim down">Weight Loss</option>
+            <option value="get stronger">Gain Weight</option>
             <option value="maintain muscle mass">Maintain Muscle Mass</option>
           </select>
         </div>
         <div>
           <label>Medical Conditions:</label>
-          <textarea name="medicalConditions" value={formData.medicalConditions} onChange={handleChange} />
+          <textarea  type="text" name="medicalConditions" value={formData.medicalConditions} onChange={handleChange} />
         </div>
         <button type="submit">Submit</button>
       </form>
     </div>
   );
-}
 
+}
 export default UserForm;
